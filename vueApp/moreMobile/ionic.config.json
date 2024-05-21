@@ -1,0 +1,7 @@
+{
+  "name": "moreMobile",
+  "integrations": {
+    "capacitor": {}
+  },
+  "type": "vue-vite"
+}
