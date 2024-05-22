@@ -1,13 +1,11 @@
-﻿using Microsoft.AspNetCore.Identity;
-using MoreMobile.Domain.Entities;
-using MoreMobile.Application.Models;
+﻿using MoreMobile.Application.Models;
 using MoreMobile.Data.Repositories;
+using MoreMobile.Domain.Entities;
 
 namespace MoreMobile.Application.Services
 {
     public class UserService : IUserService
     {
-
         public IUserRepository UserRepository { get; set; }
 
         public UserService(IUserRepository userRepository)
@@ -28,8 +26,8 @@ namespace MoreMobile.Application.Services
             }).ToList();
         }
 
-        public async Task<UserDTO?> Get(string email) {
-
+        public async Task<UserDTO?> Get(string email)
+        {
             User user = await UserRepository.GetSingleAsync(x => x.Email == email);
             if (user == null)
                 return null;
@@ -59,11 +57,10 @@ namespace MoreMobile.Application.Services
             if (user is null)
                 return;
 
+            UserRepository.Delete(user);
             await UserRepository.SaveAsync();
 
             return;
         }
-
-
     }
 }

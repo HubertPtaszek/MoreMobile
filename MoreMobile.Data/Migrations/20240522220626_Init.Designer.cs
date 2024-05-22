@@ -12,7 +12,7 @@ using MoreMobile.Data.Context;
 namespace MoreMobile.Data.Migrations
 {
     [DbContext(typeof(DatabaseContext))]
-    [Migration("20240522155833_Init")]
+    [Migration("20240522220626_Init")]
     partial class Init
     {
         /// <inheritdoc />
@@ -156,6 +156,26 @@ namespace MoreMobile.Data.Migrations
                     b.HasKey("UserId", "LoginProvider", "Name");
 
                     b.ToTable("AspNetUserTokens", (string)null);
+                });
+
+            modelBuilder.Entity("MoreMobile.Domain.Entities.ServiceType", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("Name")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<decimal>("Price")
+                        .HasColumnType("decimal(18,4)");
+
+                    b.Property<int>("WarrantyLengthInMonths")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("ServiceTypes");
                 });
 
             modelBuilder.Entity("MoreMobile.Domain.Entities.User", b =>

@@ -1,12 +1,10 @@
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.OpenApi.Models;
-using Swashbuckle.AspNetCore.Filters;
 using MoreMobile.Data.Context;
-using MoreMobile.Data.Repositories;
 using MoreMobile.Domain.Entities;
-using MoreMobile.Application.Services;
-using Microsoft.AspNetCore.Identity.UI.Services;
+using MoreMobile.WebApi.Dependencies;
+using Swashbuckle.AspNetCore.Filters;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -25,9 +23,7 @@ builder.Services.AddSwaggerGen(options =>
     options.OperationFilter<SecurityRequirementsOperationFilter>();
 });
 
-builder.Services.AddScoped<IUserService, UserService>();
-builder.Services.AddScoped<IUserRepository, UserRepository>();
-builder.Services.AddTransient<IEmailSender, EmailSender>();
+Dependencies.AddDependencies(builder);
 
 builder.Services.AddDbContext<DatabaseContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("DatabaseContext")));
@@ -49,7 +45,6 @@ builder.Services.Configure<IdentityOptions>(options =>
 
 var app = builder.Build();
 
-
 if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();
@@ -59,7 +54,7 @@ if (app.Environment.IsDevelopment())
 using (var scope = app.Services.CreateScope())
 {
     var dataContext = scope.ServiceProvider.GetRequiredService<DatabaseContext>();
-
+    dataContext.Database.Migrate();
 }
 
 app.UseCors(x => x
@@ -75,19 +70,36 @@ app.UseAuthorization();
 
 app.MapControllers();
 
-using(var scope = app.Services.CreateScope()) 
-{ 
+using (var scope = app.Services.CreateScope())
+{
     var roleManager = scope.ServiceProvider.GetRequiredService<RoleManager<IdentityRole>>();
 
     var roles = new[] { "Admin", "User", "ServiceProvider" };
 
     foreach (var role in roles)
     {
-        if(!await roleManager.RoleExistsAsync(role))
+        if (!await roleManager.RoleExistsAsync(role))
             await roleManager.CreateAsync(new IdentityRole(role));
     }
-
 }
 
+using (var scope = app.Services.CreateScope())
+{
+    var userManager = scope.ServiceProvider.GetRequiredService<UserManager<User>>();
+
+    string email = "admin@admin.com";
+    string password = "Test.123";
+
+    if (await userManager.FindByEmailAsync(email) == null)
+    {
+        var user = new User();
+        user.UserName = email;
+        user.Email = email;
+        user.EmailConfirmed = true;
+
+        await userManager.CreateAsync(user, password);
+        await userManager.AddToRoleAsync(user, "Admin");
+    }
+}
 
 app.Run();

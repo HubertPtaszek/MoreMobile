@@ -8,8 +8,6 @@ namespace MoreMobile.Data.Repositories
         protected readonly DbSet<TEntity> _dbset;
         protected readonly TDbContext Context;
 
-
-
         public Repository(TDbContext context)
         {
             Context = context;
@@ -20,6 +18,7 @@ namespace MoreMobile.Data.Repositories
         {
             _dbset.Add(entity);
         }
+
         public virtual void AddRange(List<TEntity> entities)
         {
             foreach (var entity in entities)
@@ -33,6 +32,7 @@ namespace MoreMobile.Data.Repositories
             Context.Entry(entity).State = EntityState.Deleted;
             _dbset.Remove(entity);
         }
+
         public virtual void DeleteRange(List<TEntity> entities)
         {
             foreach (var entity in entities)
@@ -41,6 +41,7 @@ namespace MoreMobile.Data.Repositories
                 _dbset.Remove(entity);
             }
         }
+
         public void DeleteWhere(Expression<Func<TEntity, bool>> whereCondition)
         {
             Context.Set<TEntity>().RemoveRange(Context.Set<TEntity>().Where(whereCondition));
@@ -51,7 +52,6 @@ namespace MoreMobile.Data.Repositories
             return _dbset.AsQueryable();
         }
 
-
         public virtual IList<TEntity> GetAll()
         {
             return _dbset.ToList();
@@ -61,7 +61,6 @@ namespace MoreMobile.Data.Repositories
         {
             return await _dbset.ToListAsync();
         }
-
 
         public IList<TEntity> GetAll(Expression<Func<TEntity, bool>> whereCondition)
         {
@@ -100,7 +99,6 @@ namespace MoreMobile.Data.Repositories
                 return _dbset.AsNoTracking();
             }
             return _dbset.AsQueryable();
-
         }
 
         public IQueryable<TEntity> GetQueryable(Expression<Func<TEntity, bool>> whereCondition)
@@ -112,14 +110,17 @@ namespace MoreMobile.Data.Repositories
         {
             return _dbset.Count();
         }
+
         public async Task<int> CountAsync()
         {
             return await _dbset.CountAsync();
         }
+
         public bool Any()
         {
             return _dbset.Any();
         }
+
         public async Task<bool> AnyAsync()
         {
             return await _dbset.AnyAsync();
@@ -139,6 +140,7 @@ namespace MoreMobile.Data.Repositories
         {
             return await _dbset.Where(whereCondition).CountAsync();
         }
+
         public bool Any(Expression<Func<TEntity, bool>> whereCondition)
         {
             return _dbset.Any(whereCondition);
@@ -153,7 +155,7 @@ namespace MoreMobile.Data.Repositories
         {
             if (Context.Entry(entity).State != EntityState.Added)
             {
-                Context.Entry(entity).State = EntityState.Modified; 
+                Context.Entry(entity).State = EntityState.Modified;
             }
         }
 
@@ -170,18 +172,14 @@ namespace MoreMobile.Data.Repositories
             return Context.SaveChanges();
         }
 
-
         public async Task<int> SaveAsync()
         {
             return await Context.SaveChangesAsync();
         }
 
-
         public TEntity Find(int id)
         {
             return _dbset.Find(id);
         }
-
     }
-
 }

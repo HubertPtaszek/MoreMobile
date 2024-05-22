@@ -1,7 +1,5 @@
-using Microsoft.EntityFrameworkCore;
 using MoreMobile.Data.Context;
 using MoreMobile.Domain.Entities;
-
 
 namespace MoreMobile.Data.Repositories
 {
@@ -9,7 +7,5 @@ namespace MoreMobile.Data.Repositories
     {
         public UserRepository(DatabaseContext context) : base(context)
         { }
-
-       
     }
 }
