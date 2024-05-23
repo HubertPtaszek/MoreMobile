@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Mvc;
 using MoreMobile.Application.Models;
 using MoreMobile.Application.Services;
+using MoreMobile.Resources.Core;
 
 namespace SimpleAPI.Controllers
 {
@@ -17,33 +18,35 @@ namespace SimpleAPI.Controllers
         }
 
         [HttpGet, Authorize]
-        public async Task<ActionResult<List<UserDTO>>> GetAllTrips()
+        public async Task<ActionResult<List<UserDTO>>> GetAll()
         {
             return await _userService.GetAll();
         }
 
         [HttpGet("{email}"), Authorize]
-        public async Task<ActionResult<UserDTO>> GetTrip(string email)
+        public async Task<ActionResult<UserDTO>> Get(string email)
         {
             var result = await _userService.Get(email);
+
             if (result is null)
-                return NotFound("User not found.");
+                return NotFound(CoreResource.ResourceManager.GetString(name: "UserNotFound"));
 
             return Ok(result);
         }
 
         [HttpPut(), Authorize]
-        public async Task<ActionResult<List<UserDTO>>> Update(UserDTO request)
+        public async Task<ActionResult<UserDTO>> Update(UserDTO request)
         {
             var result = await _userService.Update(request);
+
             if (result is null)
-                return NotFound("User not found.");
+                return NotFound(CoreResource.ResourceManager.GetString(name: "UserNotFound"));
 
             return Ok(result);
         }
 
         [HttpDelete("{email}"), Authorize]
-        public async Task<ActionResult<List<UserDTO>>> Delete(string email)
+        public async Task<ActionResult> Delete(string email)
         {
             await _userService.Delete(email);
             return Ok();

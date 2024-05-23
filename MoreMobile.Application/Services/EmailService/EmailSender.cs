@@ -1,9 +1,8 @@
-﻿using Microsoft.Extensions.Options;
-using Microsoft.AspNetCore.Identity.UI.Services;
-using System.Net.Mail;
-using System.Net;
+﻿using Microsoft.AspNetCore.Identity.UI.Services;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
+using System.Net;
+using System.Net.Mail;
 
 namespace MoreMobile.Application.Services
 {
@@ -11,7 +10,7 @@ namespace MoreMobile.Application.Services
     {
         private readonly ILogger _logger;
         private readonly IConfiguration _configuration;
-        
+
         public EmailSender(ILogger<EmailSender> logger, IConfiguration configuration)
         {
             _logger = logger;
@@ -28,14 +27,12 @@ namespace MoreMobile.Application.Services
                 EnableSsl = emailConfig.EnableSSL
             };
 
-            var body = "<h2>Reserve</h2><br/>";
+            var body = "<h2>More Mobile</h2><br/>";
             body += message;
 
             await client.SendMailAsync(
             new MailMessage(emailConfig.Email, toEmail, subject, body) { IsBodyHtml = true }
             );
-
         }
-
     }
 }

@@ -30,6 +30,7 @@
     <ProjectReference Include="..\MoreMobile.Application\MoreMobile.Application.csproj" />
     <ProjectReference Include="..\MoreMobile.Data\MoreMobile.Data.csproj" />
     <ProjectReference Include="..\MoreMobile.Domain\MoreMobile.Domain.csproj" />
+    <ProjectReference Include="..\MoreMobile.Resources\MoreMobile.Resources.csproj" />
   </ItemGroup>
 
 </Project>
