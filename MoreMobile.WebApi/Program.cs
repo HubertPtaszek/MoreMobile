@@ -26,14 +26,14 @@ builder.Services.AddSwaggerGen(options =>
 Dependencies.AddDependencies(builder);
 
 builder.Services.AddDbContext<DatabaseContext>(options =>
-    options.UseSqlServer(builder.Configuration.GetConnectionString("DatabaseContext")));
+    options.UseLazyLoadingProxies().UseSqlServer(builder.Configuration.GetConnectionString("DatabaseContext")));
 
 var configuration = builder.Configuration;
 
 builder.Services.AddAuthentication();
 
 builder.Services.AddIdentityApiEndpoints<User>()
-    .AddRoles<IdentityRole>()
+    .AddRoles<IdentityRole<Guid>>()
     .AddEntityFrameworkStores<DatabaseContext>()
     .AddApiEndpoints();
 
@@ -72,14 +72,14 @@ app.MapControllers();
 
 using (var scope = app.Services.CreateScope())
 {
-    var roleManager = scope.ServiceProvider.GetRequiredService<RoleManager<IdentityRole>>();
+    var roleManager = scope.ServiceProvider.GetRequiredService<RoleManager<IdentityRole<Guid>>>();
 
     var roles = new[] { "Admin", "User", "ServiceProvider" };
 
     foreach (var role in roles)
     {
         if (!await roleManager.RoleExistsAsync(role))
-            await roleManager.CreateAsync(new IdentityRole(role));
+            await roleManager.CreateAsync(new IdentityRole<Guid>(role));
     }
 }
 

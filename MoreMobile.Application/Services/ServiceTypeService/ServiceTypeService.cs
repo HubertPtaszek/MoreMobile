@@ -51,7 +51,6 @@ namespace MoreMobile.Application.Services
         {
             ServiceType item = new ServiceType
             {
-                Id = request.Id,
                 Name = request.Name,
                 WarrantyLengthInMonths = request.WarrantyLengthInMonths,
                 NetPrice = request.NetPrice,

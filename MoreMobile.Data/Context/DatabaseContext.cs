@@ -1,11 +1,12 @@
-﻿using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+﻿using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using MoreMobile.Data.Configurations;
 using MoreMobile.Domain.Entities;
 
 namespace MoreMobile.Data.Context
 {
-    public class DatabaseContext : IdentityDbContext<User>
+    public class DatabaseContext : IdentityDbContext<User, IdentityRole<Guid>, Guid>
     {
         public DatabaseContext(DbContextOptions options) : base(options)
         {
@@ -20,6 +21,9 @@ namespace MoreMobile.Data.Context
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.ApplyConfiguration(new ServiceTypeConfiguration());
+            modelBuilder.ApplyConfiguration(new UserConfiguration());
+            modelBuilder.ApplyConfiguration(new VisitDateConfiguration());
+            modelBuilder.ApplyConfiguration(new WarrantyConfiguration());
             base.OnModelCreating(modelBuilder);
         }
     }

@@ -117,6 +117,9 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="CarModelRequired" xml:space="preserve">
+    <value>Car model required</value>
+  </data>
   <data name="EmailRequired" xml:space="preserve">
     <value>Email is required</value>
   </data>
@@ -125,6 +128,9 @@
   </data>
   <data name="GrossPriceRequired" xml:space="preserve">
     <value>GrossPrice is required</value>
+  </data>
+  <data name="InspectionDateRequired" xml:space="preserve">
+    <value>Inspection date is required</value>
   </data>
   <data name="LastNameRequired" xml:space="preserve">
     <value>LastName is required</value>
@@ -141,11 +147,23 @@
   <data name="RegisteredSuccessfully" xml:space="preserve">
     <value>Registered Successfully</value>
   </data>
+  <data name="RegistrationNumberRequired" xml:space="preserve">
+    <value>Registration number required</value>
+  </data>
+  <data name="ServiceDateRequired" xml:space="preserve">
+    <value>Service date required</value>
+  </data>
+  <data name="ServiceTypeIdRequired" xml:space="preserve">
+    <value>Service type required</value>
+  </data>
   <data name="ServiceTypeNotFound" xml:space="preserve">
     <value>ServiceType not found</value>
   </data>
   <data name="TryAgain" xml:space="preserve">
     <value>Something went wrong, please try again. </value>
+  </data>
+  <data name="UserIdRequired" xml:space="preserve">
+    <value>User required</value>
   </data>
   <data name="UserNotFound" xml:space="preserve">
     <value>User not found</value>
@@ -153,7 +171,13 @@
   <data name="VATRateRequired" xml:space="preserve">
     <value>VAT Rate is required</value>
   </data>
+  <data name="VINRequired" xml:space="preserve">
+    <value>VIN required</value>
+  </data>
   <data name="WarrantyLengthInMonthsRequired" xml:space="preserve">
     <value>WarrantyLengthInMonths is required</value>
+  </data>
+  <data name="WarrantyNotFound" xml:space="preserve">
+    <value>Warranty not found</value>
   </data>
 </root>

@@ -13,6 +13,9 @@ namespace MoreMobile.WebApi.Dependencies
             builder.Services.AddTransient<IEmailSender, EmailSender>();
             builder.Services.AddScoped<IServiceTypeService, ServiceTypeService>();
             builder.Services.AddScoped<IServiceTypeRepository, ServiceTypeRepository>();
+            builder.Services.AddScoped<IWarrantyService, WarrantyService>();
+            builder.Services.AddScoped<IWarrantyRepository, WarrantyRepository>();
+            builder.Services.AddScoped<IVisitDateRepository, VisitDateRepository>();
         }
     }
 }
