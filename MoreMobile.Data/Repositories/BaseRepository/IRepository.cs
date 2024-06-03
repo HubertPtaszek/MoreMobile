@@ -26,6 +26,8 @@ namespace MoreMobile.Data.Repositories
 
         Task<List<TEntity>> GetAllAsync();
 
+        Task<List<TEntity>> GetAllAsync(Expression<Func<TEntity, bool>> whereCondition);
+
         int Count(Expression<Func<TEntity, bool>> whereCondition);
 
         int Count();

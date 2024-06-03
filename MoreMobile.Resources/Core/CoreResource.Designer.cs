@@ -61,6 +61,15 @@ namespace MoreMobile.Resources.Core {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Car model required.
+        /// </summary>
+        public static string CarModelRequired {
+            get {
+                return ResourceManager.GetString("CarModelRequired", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Email is required.
         /// </summary>
         public static string EmailRequired {
@@ -84,6 +93,15 @@ namespace MoreMobile.Resources.Core {
         public static string GrossPriceRequired {
             get {
                 return ResourceManager.GetString("GrossPriceRequired", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Inspection date is required.
+        /// </summary>
+        public static string InspectionDateRequired {
+            get {
+                return ResourceManager.GetString("InspectionDateRequired", resourceCulture);
             }
         }
         
@@ -133,6 +151,33 @@ namespace MoreMobile.Resources.Core {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Registration number required.
+        /// </summary>
+        public static string RegistrationNumberRequired {
+            get {
+                return ResourceManager.GetString("RegistrationNumberRequired", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Service date required.
+        /// </summary>
+        public static string ServiceDateRequired {
+            get {
+                return ResourceManager.GetString("ServiceDateRequired", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Service type required.
+        /// </summary>
+        public static string ServiceTypeIdRequired {
+            get {
+                return ResourceManager.GetString("ServiceTypeIdRequired", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to ServiceType not found.
         /// </summary>
         public static string ServiceTypeNotFound {
@@ -147,6 +192,15 @@ namespace MoreMobile.Resources.Core {
         public static string TryAgain {
             get {
                 return ResourceManager.GetString("TryAgain", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to User required.
+        /// </summary>
+        public static string UserIdRequired {
+            get {
+                return ResourceManager.GetString("UserIdRequired", resourceCulture);
             }
         }
         
@@ -169,11 +223,29 @@ namespace MoreMobile.Resources.Core {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to VIN required.
+        /// </summary>
+        public static string VINRequired {
+            get {
+                return ResourceManager.GetString("VINRequired", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to WarrantyLengthInMonths is required.
         /// </summary>
         public static string WarrantyLengthInMonthsRequired {
             get {
                 return ResourceManager.GetString("WarrantyLengthInMonthsRequired", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Warranty not found.
+        /// </summary>
+        public static string WarrantyNotFound {
+            get {
+                return ResourceManager.GetString("WarrantyNotFound", resourceCulture);
             }
         }
     }
