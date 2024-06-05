@@ -211,8 +211,9 @@ namespace MoreMobile.Data.Migrations
                 {
                     Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     WarrantyId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    InspectionDate = table.Column<DateOnly>(type: "date", nullable: false),
+                    InspectionDate = table.Column<DateTime>(type: "datetime2", nullable: false),
                     InspectionDone = table.Column<bool>(type: "bit", nullable: false),
+                    ReminderSent = table.Column<bool>(type: "bit", nullable: false),
                     FirstVisit = table.Column<bool>(type: "bit", nullable: false)
                 },
                 constraints: table =>

@@ -18,6 +18,9 @@ namespace MoreMobile.Data.Migrations
 #pragma warning disable 612, 618
             modelBuilder
                 .HasAnnotation("ProductVersion", "8.0.4")
+                .HasAnnotation("Proxies:ChangeTracking", false)
+                .HasAnnotation("Proxies:CheckEquality", false)
+                .HasAnnotation("Proxies:LazyLoading", true)
                 .HasAnnotation("Relational:MaxIdentifierLength", 128);
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
@@ -260,10 +263,13 @@ namespace MoreMobile.Data.Migrations
                     b.Property<bool>("FirstVisit")
                         .HasColumnType("bit");
 
-                    b.Property<DateOnly>("InspectionDate")
-                        .HasColumnType("date");
+                    b.Property<DateTime>("InspectionDate")
+                        .HasColumnType("datetime2");
 
                     b.Property<bool>("InspectionDone")
+                        .HasColumnType("bit");
+
+                    b.Property<bool>("ReminderSent")
                         .HasColumnType("bit");
 
                     b.Property<Guid>("WarrantyId")

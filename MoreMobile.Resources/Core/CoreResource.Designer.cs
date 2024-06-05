@@ -160,6 +160,15 @@ namespace MoreMobile.Resources.Core {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Dzień dobry, przypominamy o wizycie w dniu {0} w salonie {1}.
+        /// </summary>
+        public static string ReminderSMSMessage {
+            get {
+                return ResourceManager.GetString("ReminderSMSMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Service date required.
         /// </summary>
         public static string ServiceDateRequired {
