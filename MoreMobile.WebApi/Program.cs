@@ -1,10 +1,13 @@
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.OpenApi.Models;
+using Microsoft.Extensions.Hosting;
 using MoreMobile.Data.Context;
 using MoreMobile.Domain.Entities;
 using MoreMobile.WebApi.Dependencies;
 using Swashbuckle.AspNetCore.Filters;
+using Coravel;
+using MoreMobile.Application.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -43,7 +46,14 @@ builder.Services.Configure<IdentityOptions>(options =>
     options.SignIn.RequireConfirmedEmail = true;
 });
 
+builder.Services.AddScheduler();
+
 var app = builder.Build();
+
+app.Services.UseScheduler(scheduler =>
+{
+    scheduler.Schedule<SMSReminderService>().EveryMinute();
+});
 
 if (app.Environment.IsDevelopment())
 {

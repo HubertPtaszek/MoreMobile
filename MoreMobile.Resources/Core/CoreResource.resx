@@ -150,6 +150,9 @@
   <data name="RegistrationNumberRequired" xml:space="preserve">
     <value>Registration number required</value>
   </data>
+  <data name="ReminderSMSMessage" xml:space="preserve">
+    <value>Dzień dobry, przypominamy o wizycie w dniu {0} w salonie {1}</value>
+  </data>
   <data name="ServiceDateRequired" xml:space="preserve">
     <value>Service date required</value>
   </data>

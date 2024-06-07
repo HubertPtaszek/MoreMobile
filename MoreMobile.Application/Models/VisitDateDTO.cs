@@ -9,7 +9,7 @@ namespace MoreMobile.Application.Models
         public Guid Id { get; set; }
 
         [Required(ErrorMessageResourceName = "InspectionDateRequired", ErrorMessageResourceType = typeof(CoreResource))]
-        public DateOnly InspectionDate { get; set; }
+        public DateTime InspectionDate { get; set; }
 
         public bool FirstVisit { get; set; }
         public bool InspectionDone { get; set; }
