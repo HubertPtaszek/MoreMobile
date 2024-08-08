@@ -3,11 +3,11 @@ import { createRouter, createWebHistory } from '@ionic/vue-router';
 const routes = [
   {
     path: '',
-    redirect: '/folder/Inbox'
+    redirect: '/auth'
   },
   {
-    path: '/folder/:id',
-    component: () => import ('../views/FolderPage.vue')
+    path: '/auth',
+    component: () => import ('../modules/auth/AuthenticationContainer.vue')
   }
 ]
 
