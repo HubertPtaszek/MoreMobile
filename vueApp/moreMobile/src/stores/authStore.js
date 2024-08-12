@@ -85,11 +85,59 @@ export const useAuthStore = defineStore("auth-store", {
         }
 
     },
+
+    async forgotPassword() {
+
+        try {
+            let result = authApi.forgotPassword(this.userData.email);
+            if (result) {
+                console.log('todo')
+                // snackbar - show status
+                // route to login
+            }
+        } catch (error) {
+            console.log(error)
+        }
+
+    },
     async getUserInfo() {
         try {
             let result = authApi.getInfo();
             if (result) {
                 console.log('todo:', result.data)
+            }
+        } catch (error) {
+            console.log(error)
+        }
+    },
+    async setUserInfo(userInformationForm) {
+        try {
+            let result = authApi.postInfo(userInformationForm);
+            if (result) {
+                console.log('todo')
+                // snackbar - show status
+            }
+        } catch (error) {
+            console.log(error)
+        }
+    },
+    async resetPassword(resetPasswordForm) {
+        try {
+            let result = authApi.resetPassword(resetPasswordForm);
+            if (result) {
+                console.log('todo')
+                // snackbar - show status
+            }
+        } catch (error) {
+            console.log(error)
+        }
+    },
+    async set2FA(twoFactorAuthForm) {
+        try {
+            let result = authApi.set2FA(twoFactorAuthForm);
+            if (result) {
+                console.log('todo')
+                // snackbar - show status
             }
         } catch (error) {
             console.log(error)
