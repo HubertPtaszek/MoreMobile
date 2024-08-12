@@ -1,4 +1,4 @@
-import AxiosInstance from '@/utils/axios.config.js';
+import AxiosInstance from '@/utils/axiosConfig.js';
 
 const ROOT = 'https://localhost:7244';
 
