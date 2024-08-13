@@ -12,6 +12,7 @@ const routes = [
   },
   {
     path: '/register',
+    name: 'Register',
     component: () => import ('../modules/auth/SignUpContainer.vue')
   },
   {
@@ -25,9 +26,14 @@ const routes = [
     component: () => import ('../modules/calendar/CalendarContainer.vue')
   },
   {
-    path: '/calendar',
+    path: '/email-confirm',
     name: 'EmailConfirmation',
     component: () => import ('../modules/auth/EmailConfirmation.vue')
+  },
+  {
+    path: '/settings',
+    name: 'Settings',
+    component: () => import ('../modules/settings/SettingsContainer.vue')
   }
 ]
 

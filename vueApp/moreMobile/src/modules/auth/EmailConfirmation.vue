@@ -1,24 +1,20 @@
 <template>
-    <ion-page>
-        <ion-content class="flow-root">
-            Email został potwierdzony, zalgouj się do swojego konta.
-        </ion-content>
-    </ion-page>
+  <ion-page>
+    <ion-content class="flow-root">
+      Email został potwierdzony, zalgouj się do swojego konta.
+    </ion-content>
+  </ion-page>
 </template>
 
 <script>
-import {
-    IonContent,
-    IonPage
-} from "@ionic/vue";
+import { IonContent, IonPage } from "@ionic/vue";
 
 export default {
-    components: {
-        IonContent,
-        IonPage
-    }
-}
+  components: {
+    IonContent,
+    IonPage,
+  },
+};
 </script>
 
-<style>
-</style>
+<style></style>

@@ -1,9 +1,9 @@
 <template>
   <ion-page>
     <ion-content class="flow-root">
-      <div class="calendar">
-        <div class="calendar-header mb-2">Kalendarz</div>
-        <Calendar />
+      <div class="settings">
+        <div class="settings-header mb-2">Ustawienia</div>
+        <UserSettings />
       </div>
     </ion-content>
   </ion-page>
@@ -12,19 +12,19 @@
 <script>
 import { IonContent, IonPage } from "@ionic/vue";
 
-import Calendar from "./Calendar.vue";
+import UserSettings from "./UserSettings.vue";
 
 export default {
   components: {
     IonContent,
     IonPage,
-    Calendar,
+    UserSettings
   },
 };
 </script>
 
 <style scoped lang="scss">
-.calendar {
+.settings {
   margin: 80px 1rem;
 
   &-header {
