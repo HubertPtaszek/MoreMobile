@@ -4,6 +4,7 @@
       <div class="calendar">
         <div class="calendar-header mb-2">Kalendarz</div>
         <Calendar />
+        <DailyEvents />
       </div>
     </ion-content>
   </ion-page>
@@ -13,11 +14,13 @@
 import { IonContent, IonPage } from "@ionic/vue";
 
 import Calendar from "./Calendar.vue";
+import DailyEvents from "./DailyEvents.vue";
 
 export default {
   components: {
     IonContent,
     IonPage,
+    DailyEvents,
     Calendar,
   },
 };

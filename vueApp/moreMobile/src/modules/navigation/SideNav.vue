@@ -25,7 +25,18 @@
           <ion-row
             class="fs-default-top-border ion-padding-top process-tree-wrapper"
           >
-            <ion-col>  </ion-col>
+            <ion-col>
+              <div class="menu-item">
+                <RouterLink to="/services" @click="onMenuItemClick()"><ion-icon
+                    :icon="icons.settingsIcon"
+                  ></ion-icon> <span> Usługi</span></RouterLink>
+              </div>
+              <div class="menu-item mt-3">
+                <RouterLink to="/users" @click="onMenuItemClick()"><ion-icon
+                    :icon="icons.userIcon"
+                  ></ion-icon> <span> Użytkownicy</span></RouterLink>
+              </div>
+            </ion-col>
           </ion-row>
           <ion-row
             class="menu-bottom-row fs-default-top-border ion-padding ion-justify-content-between"
@@ -77,6 +88,7 @@ import {
   menuOutline,
   logOutOutline,
   settingsOutline,
+  personOutline
 } from "ionicons/icons";
 
 export default {
@@ -87,6 +99,7 @@ export default {
         sidebarHideIcon: menuOutline,
         logoutIcon: logOutOutline,
         settingsIcon: settingsOutline,
+        userIcon: personOutline
       },
     };
   },
@@ -102,6 +115,9 @@ export default {
       await menuController.close("first-menu");
       this.$router.push({ name: "Settings" });
     },
+    async onMenuItemClick() {
+      await menuController.close("first-menu");
+    }
   },
   components: {
     IonMenu,
@@ -134,5 +150,15 @@ ion-menu {
 
 .ico-menu {
   rotate: 90deg;
+}
+
+.menu-item a {
+  color: white !important;
+  text-decoration: none;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: 1.2rem;
+  margin-left: 0.8rem;
 }
 </style>

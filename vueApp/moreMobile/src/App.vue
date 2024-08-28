@@ -17,7 +17,7 @@
 </template>
 
 <script>
-import { IonApp, IonRouterOutlet } from "@ionic/vue";
+import { IonApp, IonRouterOutlet, IonHeader } from "@ionic/vue";
 
 import SideNav from "@/modules/navigation/SideNav.vue";
 import TopNav from "@/modules/navigation/TopNav.vue";
@@ -31,6 +31,7 @@ export default {
   components: {
     IonApp,
     IonRouterOutlet,
+    IonHeader,
     SideNav,
     TopNav,
   },

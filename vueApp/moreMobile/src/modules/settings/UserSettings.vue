@@ -2,7 +2,7 @@
   <div class="user">
     <div class="user-header">Dane użytkownika</div>
     <div class="user-form">
-      <p>(formularz do zmiany danych)</p>
+      <p>(normal user) (formularz do zmiany danych)</p>
     </div>
     <p>(usuwanie konta)</p>
   </div>
