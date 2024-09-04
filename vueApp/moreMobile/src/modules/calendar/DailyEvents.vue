@@ -28,6 +28,7 @@ import { IonButton, IonIcon } from "@ionic/vue";
     methods: {
         onAddBtnClick() {
             console.log('add event')
+            this.$router.push('/visit')
         }
     },
     components: {

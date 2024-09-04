@@ -3,7 +3,8 @@
       <ion-content class="flow-root">
         <div class="settings">
           <div class="settings-header mb-2">Zarządzanie użytkownikami</div>
-          <p>(admin)lista użytkowników/usuwanie</p>
+          <p>(admin)</p>
+          <UsersList />
         </div>
       </ion-content>
     </ion-page>
@@ -11,11 +12,26 @@
   
   <script>
   import { IonContent, IonPage } from "@ionic/vue";
+
+  import UsersList from "./UsersList.vue";
+
+  import { mapActions } from "pinia";
+  import { useUsersManagementStore } from "@/stores/userManagementStore";
   
   export default {
+    methods: {
+        ...mapActions(useUsersManagementStore, [
+        'getUsers'
+      ]),
+    },
+    async ionViewWillEnter() {
+      const result = await this.getUsers();
+      console.log(result) 
+    },
     components: {
       IonContent,
       IonPage,
+      UsersList
     },
   };
   </script>

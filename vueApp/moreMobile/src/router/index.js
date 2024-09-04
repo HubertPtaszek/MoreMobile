@@ -26,6 +26,11 @@ const routes = [
     component: () => import ('../modules/calendar/CalendarContainer.vue')
   },
   {
+    path: '/visit',
+    name: 'VisitDetails',
+    component: () => import ('../modules/calendar/AddEditWarranty.vue')
+  },
+  {
     path: '/service/:id',
     name: 'ServiceDetails',
     component: () => import ('../modules/services/ServiceDetails.vue')
@@ -39,6 +44,11 @@ const routes = [
     path: '/users',
     name: 'Users',
     component: () => import ('../modules/users/UsersManagementContainer.vue')
+  },
+  {
+    path: '/user/:email',
+    name: 'UserDetails',
+    component: () => import ('../modules/users/UserDetails.vue')
   },
   {
     path: '/email-confirm',
