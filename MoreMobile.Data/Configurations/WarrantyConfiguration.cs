@@ -11,7 +11,7 @@ namespace MoreMobile.Data.Configurations
             builder.HasOne(e => e.User)
                 .WithMany(e => e.Warranties)
                 .HasForeignKey(e => e.UserId)
-                .IsRequired();
+                .IsRequired(false);
 
             builder.HasMany(e => e.VisitDates)
                 .WithOne(e => e.Warranty)
@@ -21,7 +21,13 @@ namespace MoreMobile.Data.Configurations
             builder.HasOne(e => e.ServiceType)
                 .WithMany(e => e.Warranties)
                 .HasForeignKey(e => e.ServiceTypeId)
-                .IsRequired();
+                .IsRequired()
+                .OnDelete(DeleteBehavior.NoAction);
+
+            builder.HasOne(e => e.Company)
+                .WithMany(e => e.Warranties)
+                .HasForeignKey(e => e.CompanyId)
+                .IsRequired(false);
         }
     }
 }

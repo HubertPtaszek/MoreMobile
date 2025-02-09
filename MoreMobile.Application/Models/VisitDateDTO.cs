@@ -13,5 +13,6 @@ namespace MoreMobile.Application.Models
 
         public bool FirstVisit { get; set; }
         public bool InspectionDone { get; set; }
+        public Guid WarrantyId { get; set; }
     }
 }

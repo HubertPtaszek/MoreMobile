@@ -16,5 +16,7 @@ namespace MoreMobile.Application.Models
 
         [Required(ErrorMessageResourceName = "PhoneNumberRequired", ErrorMessageResourceType = typeof(CoreResource))]
         public string? PhoneNumber { get; set; }
+
+        public Guid? CompanyId { get; set; }
     }
 }

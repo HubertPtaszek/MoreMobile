@@ -22,7 +22,8 @@ namespace MoreMobile.Application.Services
                 Email = x.Email,
                 FirstName = x.FirstName,
                 LastName = x.LastName,
-                PhoneNumber = x.PhoneNumber
+                PhoneNumber = x.PhoneNumber,
+                CompanyId = x.CompanyId,
             }).ToList();
         }
 
@@ -31,7 +32,15 @@ namespace MoreMobile.Application.Services
             User user = await UserRepository.GetSingleAsync(x => x.Email == email);
             if (user == null)
                 return null;
-            return new UserDTO { Email = user.Email, FirstName = user.FirstName, LastName = user.LastName, PhoneNumber = user.PhoneNumber };
+
+            return new UserDTO
+            {
+                Email = user.Email,
+                FirstName = user.FirstName,
+                LastName = user.LastName,
+                PhoneNumber = user.PhoneNumber,
+                CompanyId = user.CompanyId,
+            };
         }
 
         public async Task<UserDTO?> Update(UserDTO request)

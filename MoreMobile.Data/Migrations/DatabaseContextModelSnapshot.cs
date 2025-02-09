@@ -162,6 +162,9 @@ namespace MoreMobile.Data.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
+                    b.Property<Guid>("CompanyId")
+                        .HasColumnType("uniqueidentifier");
+
                     b.Property<decimal>("GrossPrice")
                         .HasColumnType("decimal(18,4)");
 
@@ -179,10 +182,12 @@ namespace MoreMobile.Data.Migrations
 
                     b.HasKey("Id");
 
+                    b.HasIndex("CompanyId");
+
                     b.ToTable("ServiceTypes");
                 });
 
-            modelBuilder.Entity("MoreMobile.Domain.Entities.User", b =>
+            modelBuilder.Entity("MoreMobile.Domain.Entities.UserBase", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
@@ -195,18 +200,17 @@ namespace MoreMobile.Data.Migrations
                         .IsConcurrencyToken()
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<string>("Discriminator")
+                        .IsRequired()
+                        .HasMaxLength(8)
+                        .HasColumnType("nvarchar(8)");
+
                     b.Property<string>("Email")
                         .HasMaxLength(256)
                         .HasColumnType("nvarchar(256)");
 
                     b.Property<bool>("EmailConfirmed")
                         .HasColumnType("bit");
-
-                    b.Property<string>("FirstName")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("LastName")
-                        .HasColumnType("nvarchar(max)");
 
                     b.Property<bool>("LockoutEnabled")
                         .HasColumnType("bit");
@@ -252,6 +256,10 @@ namespace MoreMobile.Data.Migrations
                         .HasFilter("[NormalizedUserName] IS NOT NULL");
 
                     b.ToTable("AspNetUsers", (string)null);
+
+                    b.HasDiscriminator<string>("Discriminator").HasValue("UserBase");
+
+                    b.UseTphMappingStrategy();
                 });
 
             modelBuilder.Entity("MoreMobile.Domain.Entities.VisitDate", b =>
@@ -292,6 +300,10 @@ namespace MoreMobile.Data.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<Guid?>("CompanyId")
+                        .IsRequired()
+                        .HasColumnType("uniqueidentifier");
+
                     b.Property<string>("LossWarrantyReason")
                         .HasColumnType("nvarchar(max)");
 
@@ -308,7 +320,7 @@ namespace MoreMobile.Data.Migrations
                     b.Property<Guid>("ServiceTypeId")
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<Guid>("UserId")
+                    b.Property<Guid?>("UserId")
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<string>("VIN")
@@ -317,11 +329,51 @@ namespace MoreMobile.Data.Migrations
 
                     b.HasKey("Id");
 
+                    b.HasIndex("CompanyId");
+
                     b.HasIndex("ServiceTypeId");
 
                     b.HasIndex("UserId");
 
-                    b.ToTable("Warranty");
+                    b.ToTable("Warranties");
+                });
+
+            modelBuilder.Entity("MoreMobile.Domain.Entities.Admin", b =>
+                {
+                    b.HasBaseType("MoreMobile.Domain.Entities.UserBase");
+
+                    b.HasDiscriminator().HasValue("Admin");
+                });
+
+            modelBuilder.Entity("MoreMobile.Domain.Entities.Company", b =>
+                {
+                    b.HasBaseType("MoreMobile.Domain.Entities.UserBase");
+
+                    b.Property<string>("CompanyName")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasDiscriminator().HasValue("Company");
+                });
+
+            modelBuilder.Entity("MoreMobile.Domain.Entities.User", b =>
+                {
+                    b.HasBaseType("MoreMobile.Domain.Entities.UserBase");
+
+                    b.Property<Guid?>("CompanyId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("FirstName")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("LastName")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasIndex("CompanyId");
+
+                    b.HasDiscriminator().HasValue("User");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<System.Guid>", b =>
@@ -335,7 +387,7 @@ namespace MoreMobile.Data.Migrations
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserClaim<System.Guid>", b =>
                 {
-                    b.HasOne("MoreMobile.Domain.Entities.User", null)
+                    b.HasOne("MoreMobile.Domain.Entities.UserBase", null)
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -344,7 +396,7 @@ namespace MoreMobile.Data.Migrations
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserLogin<System.Guid>", b =>
                 {
-                    b.HasOne("MoreMobile.Domain.Entities.User", null)
+                    b.HasOne("MoreMobile.Domain.Entities.UserBase", null)
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -359,7 +411,7 @@ namespace MoreMobile.Data.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("MoreMobile.Domain.Entities.User", null)
+                    b.HasOne("MoreMobile.Domain.Entities.UserBase", null)
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -368,11 +420,22 @@ namespace MoreMobile.Data.Migrations
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserToken<System.Guid>", b =>
                 {
-                    b.HasOne("MoreMobile.Domain.Entities.User", null)
+                    b.HasOne("MoreMobile.Domain.Entities.UserBase", null)
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+                });
+
+            modelBuilder.Entity("MoreMobile.Domain.Entities.ServiceType", b =>
+                {
+                    b.HasOne("MoreMobile.Domain.Entities.Company", "Company")
+                        .WithMany("ServiceTypes")
+                        .HasForeignKey("CompanyId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Company");
                 });
 
             modelBuilder.Entity("MoreMobile.Domain.Entities.VisitDate", b =>
@@ -388,21 +451,36 @@ namespace MoreMobile.Data.Migrations
 
             modelBuilder.Entity("MoreMobile.Domain.Entities.Warranty", b =>
                 {
+                    b.HasOne("MoreMobile.Domain.Entities.Company", "Company")
+                        .WithMany("Warranties")
+                        .HasForeignKey("CompanyId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
                     b.HasOne("MoreMobile.Domain.Entities.ServiceType", "ServiceType")
                         .WithMany("Warranties")
                         .HasForeignKey("ServiceTypeId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
 
                     b.HasOne("MoreMobile.Domain.Entities.User", "User")
                         .WithMany("Warranties")
-                        .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("UserId");
+
+                    b.Navigation("Company");
 
                     b.Navigation("ServiceType");
 
                     b.Navigation("User");
+                });
+
+            modelBuilder.Entity("MoreMobile.Domain.Entities.User", b =>
+                {
+                    b.HasOne("MoreMobile.Domain.Entities.Company", "Company")
+                        .WithMany("Employees")
+                        .HasForeignKey("CompanyId");
+
+                    b.Navigation("Company");
                 });
 
             modelBuilder.Entity("MoreMobile.Domain.Entities.ServiceType", b =>
@@ -410,14 +488,23 @@ namespace MoreMobile.Data.Migrations
                     b.Navigation("Warranties");
                 });
 
-            modelBuilder.Entity("MoreMobile.Domain.Entities.User", b =>
-                {
-                    b.Navigation("Warranties");
-                });
-
             modelBuilder.Entity("MoreMobile.Domain.Entities.Warranty", b =>
                 {
                     b.Navigation("VisitDates");
+                });
+
+            modelBuilder.Entity("MoreMobile.Domain.Entities.Company", b =>
+                {
+                    b.Navigation("Employees");
+
+                    b.Navigation("ServiceTypes");
+
+                    b.Navigation("Warranties");
+                });
+
+            modelBuilder.Entity("MoreMobile.Domain.Entities.User", b =>
+                {
+                    b.Navigation("Warranties");
                 });
 #pragma warning restore 612, 618
         }

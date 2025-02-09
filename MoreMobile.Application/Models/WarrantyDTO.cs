@@ -26,7 +26,7 @@ namespace MoreMobile.Application.Models
         public IEnumerable<VisitDateDTO> VisitDates { get; set; } = [];
 
         [Required(ErrorMessageResourceName = "UserIdRequired", ErrorMessageResourceType = typeof(CoreResource))]
-        public Guid UserId { get; set; }
+        public Guid? UserId { get; set; }
 
         public bool LostWarranty { get; set; }
         public string? LossWarrantyReason { get; set; }

@@ -9,23 +9,23 @@ namespace MoreMobile.WebApi.Controllers
     [Route("[controller]")]
     public class AuthController : ControllerBase
     {
-        private readonly SignInManager<User> _signInManager;
-        private readonly UserManager<User> _userManager;
+        private readonly SignInManager<UserBase> _signInManager;
+        private readonly UserManager<UserBase> _userManager;
 
-        public AuthController(SignInManager<User> sm, UserManager<User> um)
+        public AuthController(SignInManager<UserBase> sm, UserManager<UserBase> um)
         {
             _signInManager = sm;
             _userManager = um;
         }
 
         [HttpPost("register")]
-        public async Task<ActionResult> RegisterUser(User user)
+        public async Task<ActionResult> RegisterUser(UserBase user)
         {
             IdentityResult result = new();
 
             try
             {
-                User user_ = new User()
+                UserBase user_ = new UserBase()
                 {
                     Email = user.Email
                 };

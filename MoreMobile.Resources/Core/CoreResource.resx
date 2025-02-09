@@ -120,6 +120,9 @@
   <data name="CarModelRequired" xml:space="preserve">
     <value>Car model required</value>
   </data>
+  <data name="CompanyNameRequired" xml:space="preserve">
+    <value>Company name required</value>
+  </data>
   <data name="EmailRequired" xml:space="preserve">
     <value>Email is required</value>
   </data>

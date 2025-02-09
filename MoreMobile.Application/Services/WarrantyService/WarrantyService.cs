@@ -32,19 +32,12 @@ namespace MoreMobile.Application.Services
                 UserId = x.UserId,
                 LostWarranty = x.LostWarranty,
                 LossWarrantyReason = x.LossWarrantyReason,
-                VisitDates = x.VisitDates.Select(z => new VisitDateDTO
-                {
-                    Id = z.Id,
-                    FirstVisit = z.FirstVisit,
-                    InspectionDate = z.InspectionDate,
-                    InspectionDone = z.InspectionDone,
-                }),
             }).ToList();
         }
 
         public async Task<List<WarrantyDTO>> GetUserAll(Guid userId)
         {
-            var items = await WarrantyRepository.GetAllAsync(x => x.UserId == userId);
+            var items = await WarrantyRepository.GetAllAsync(x => x.UserId == userId && (x.User != null && (x.User.CompanyId == null || x.CompanyId == x.User.CompanyId)));
 
             return items.Select(x => new WarrantyDTO()
             {
@@ -57,13 +50,6 @@ namespace MoreMobile.Application.Services
                 UserId = x.UserId,
                 LostWarranty = x.LostWarranty,
                 LossWarrantyReason = x.LossWarrantyReason,
-                VisitDates = x.VisitDates.Select(z => new VisitDateDTO
-                {
-                    Id = z.Id,
-                    FirstVisit = z.FirstVisit,
-                    InspectionDate = z.InspectionDate,
-                    InspectionDone = z.InspectionDone,
-                }),
             }).ToList();
         }
 

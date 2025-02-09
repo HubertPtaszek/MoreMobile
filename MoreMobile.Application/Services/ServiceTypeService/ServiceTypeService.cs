@@ -2,6 +2,7 @@
 using MoreMobile.Application.Models;
 using MoreMobile.Data.Repositories;
 using MoreMobile.Domain.Entities;
+using System.ComponentModel.Design;
 
 namespace MoreMobile.Application.Services
 {
@@ -25,7 +26,24 @@ namespace MoreMobile.Application.Services
                 NetPrice = x.NetPrice,
                 GrossPrice = x.GrossPrice,
                 VATRate = x.VATRate,
-                WarrantyLengthInMonths = x.WarrantyLengthInMonths
+                WarrantyLengthInMonths = x.WarrantyLengthInMonths,
+                CompanyId = x.CompanyId,
+            }).ToList();
+        }
+
+        public async Task<List<ServiceTypeDTO>> GetAll(Guid companyId)
+        {
+            var items = await ServiceTypeRepository.GetAllAsync(x => x.CompanyId == companyId);
+
+            return items.Select(x => new ServiceTypeDTO()
+            {
+                Id = x.Id,
+                Name = x.Name,
+                NetPrice = x.NetPrice,
+                GrossPrice = x.GrossPrice,
+                VATRate = x.VATRate,
+                WarrantyLengthInMonths = x.WarrantyLengthInMonths,
+                CompanyId = x.CompanyId,
             }).ToList();
         }
 
@@ -43,7 +61,8 @@ namespace MoreMobile.Application.Services
                 WarrantyLengthInMonths = item.WarrantyLengthInMonths,
                 NetPrice = item.NetPrice,
                 GrossPrice = item.GrossPrice,
-                VATRate = item.VATRate
+                VATRate = item.VATRate,
+                CompanyId = item.CompanyId,
             };
         }
 
@@ -55,7 +74,8 @@ namespace MoreMobile.Application.Services
                 WarrantyLengthInMonths = request.WarrantyLengthInMonths,
                 NetPrice = request.NetPrice,
                 GrossPrice = request.GrossPrice,
-                VATRate = request.VATRate
+                VATRate = request.VATRate,
+                CompanyId = request.CompanyId,
             };
 
             ServiceTypeRepository.Add(item);
@@ -76,7 +96,7 @@ namespace MoreMobile.Application.Services
             item.NetPrice = request.NetPrice;
             item.GrossPrice = request.GrossPrice;
             item.VATRate = request.VATRate;
-
+            item.CompanyId = request.CompanyId;
             ServiceTypeRepository.Edit(item);
             await ServiceTypeRepository.SaveAsync();
 

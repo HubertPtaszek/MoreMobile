@@ -35,7 +35,7 @@ var configuration = builder.Configuration;
 
 builder.Services.AddAuthentication();
 
-builder.Services.AddIdentityApiEndpoints<User>()
+builder.Services.AddIdentityApiEndpoints<UserBase>()
     .AddRoles<IdentityRole<Guid>>()
     .AddEntityFrameworkStores<DatabaseContext>()
     .AddApiEndpoints();
@@ -72,7 +72,7 @@ app.UseCors(x => x
         .AllowAnyMethod()
         .AllowAnyHeader());
 
-app.MapIdentityApi<User>();
+app.MapIdentityApi<UserBase>();
 
 app.UseHttpsRedirection();
 
@@ -95,14 +95,14 @@ using (var scope = app.Services.CreateScope())
 
 using (var scope = app.Services.CreateScope())
 {
-    var userManager = scope.ServiceProvider.GetRequiredService<UserManager<User>>();
+    var userManager = scope.ServiceProvider.GetRequiredService<UserManager<UserBase>>();
 
     string email = "admin@admin.com";
     string password = "Test.123";
 
     if (await userManager.FindByEmailAsync(email) == null)
     {
-        var user = new User();
+        var user = new Admin();
         user.UserName = email;
         user.Email = email;
         user.EmailConfirmed = true;

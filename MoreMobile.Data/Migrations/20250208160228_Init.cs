@@ -30,8 +30,11 @@ namespace MoreMobile.Data.Migrations
                 columns: table => new
                 {
                     Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    Discriminator = table.Column<string>(type: "nvarchar(8)", maxLength: 8, nullable: false),
+                    CompanyName = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     FirstName = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     LastName = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    CompanyId = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
                     UserName = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: true),
                     NormalizedUserName = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: true),
                     Email = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: true),
@@ -50,22 +53,11 @@ namespace MoreMobile.Data.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_AspNetUsers", x => x.Id);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "ServiceTypes",
-                columns: table => new
-                {
-                    Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    Name = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    WarrantyLengthInMonths = table.Column<int>(type: "int", nullable: false),
-                    GrossPrice = table.Column<decimal>(type: "decimal(18,4)", nullable: false),
-                    NetPrice = table.Column<decimal>(type: "decimal(18,4)", nullable: false),
-                    VATRate = table.Column<decimal>(type: "decimal(18,2)", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_ServiceTypes", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_AspNetUsers_AspNetUsers_CompanyId",
+                        column: x => x.CompanyId,
+                        principalTable: "AspNetUsers",
+                        principalColumn: "Id");
                 });
 
             migrationBuilder.CreateTable(
@@ -175,7 +167,30 @@ namespace MoreMobile.Data.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Warranty",
+                name: "ServiceTypes",
+                columns: table => new
+                {
+                    Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    Name = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    WarrantyLengthInMonths = table.Column<int>(type: "int", nullable: false),
+                    GrossPrice = table.Column<decimal>(type: "decimal(18,4)", nullable: false),
+                    NetPrice = table.Column<decimal>(type: "decimal(18,4)", nullable: false),
+                    VATRate = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
+                    CompanyId = table.Column<Guid>(type: "uniqueidentifier", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_ServiceTypes", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_ServiceTypes_AspNetUsers_CompanyId",
+                        column: x => x.CompanyId,
+                        principalTable: "AspNetUsers",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Warranties",
                 columns: table => new
                 {
                     Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
@@ -186,23 +201,28 @@ namespace MoreMobile.Data.Migrations
                     LossWarrantyReason = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     ServiceTypeId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     ServiceDate = table.Column<DateOnly>(type: "date", nullable: false),
-                    UserId = table.Column<Guid>(type: "uniqueidentifier", nullable: false)
+                    UserId = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
+                    CompanyId = table.Column<Guid>(type: "uniqueidentifier", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Warranty", x => x.Id);
+                    table.PrimaryKey("PK_Warranties", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Warranty_AspNetUsers_UserId",
-                        column: x => x.UserId,
+                        name: "FK_Warranties_AspNetUsers_CompanyId",
+                        column: x => x.CompanyId,
                         principalTable: "AspNetUsers",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_Warranty_ServiceTypes_ServiceTypeId",
+                        name: "FK_Warranties_AspNetUsers_UserId",
+                        column: x => x.UserId,
+                        principalTable: "AspNetUsers",
+                        principalColumn: "Id");
+                    table.ForeignKey(
+                        name: "FK_Warranties_ServiceTypes_ServiceTypeId",
                         column: x => x.ServiceTypeId,
                         principalTable: "ServiceTypes",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        principalColumn: "Id");
                 });
 
             migrationBuilder.CreateTable(
@@ -220,9 +240,9 @@ namespace MoreMobile.Data.Migrations
                 {
                     table.PrimaryKey("PK_VisitDate", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_VisitDate_Warranty_WarrantyId",
+                        name: "FK_VisitDate_Warranties_WarrantyId",
                         column: x => x.WarrantyId,
-                        principalTable: "Warranty",
+                        principalTable: "Warranties",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
@@ -260,6 +280,11 @@ namespace MoreMobile.Data.Migrations
                 column: "NormalizedEmail");
 
             migrationBuilder.CreateIndex(
+                name: "IX_AspNetUsers_CompanyId",
+                table: "AspNetUsers",
+                column: "CompanyId");
+
+            migrationBuilder.CreateIndex(
                 name: "UserNameIndex",
                 table: "AspNetUsers",
                 column: "NormalizedUserName",
@@ -267,18 +292,28 @@ namespace MoreMobile.Data.Migrations
                 filter: "[NormalizedUserName] IS NOT NULL");
 
             migrationBuilder.CreateIndex(
+                name: "IX_ServiceTypes_CompanyId",
+                table: "ServiceTypes",
+                column: "CompanyId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_VisitDate_WarrantyId",
                 table: "VisitDate",
                 column: "WarrantyId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Warranty_ServiceTypeId",
-                table: "Warranty",
+                name: "IX_Warranties_CompanyId",
+                table: "Warranties",
+                column: "CompanyId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Warranties_ServiceTypeId",
+                table: "Warranties",
                 column: "ServiceTypeId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Warranty_UserId",
-                table: "Warranty",
+                name: "IX_Warranties_UserId",
+                table: "Warranties",
                 column: "UserId");
         }
 
@@ -307,13 +342,13 @@ namespace MoreMobile.Data.Migrations
                 name: "AspNetRoles");
 
             migrationBuilder.DropTable(
-                name: "Warranty");
-
-            migrationBuilder.DropTable(
-                name: "AspNetUsers");
+                name: "Warranties");
 
             migrationBuilder.DropTable(
                 name: "ServiceTypes");
+
+            migrationBuilder.DropTable(
+                name: "AspNetUsers");
         }
     }
 }

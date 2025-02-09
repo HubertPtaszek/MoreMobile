@@ -6,7 +6,7 @@ using MoreMobile.Domain.Entities;
 
 namespace MoreMobile.Data.Context
 {
-    public class DatabaseContext : IdentityDbContext<User, IdentityRole<Guid>, Guid>
+    public class DatabaseContext : IdentityDbContext<UserBase, IdentityRole<Guid>, Guid>
     {
         public DatabaseContext(DbContextOptions options) : base(options)
         {
@@ -17,6 +17,7 @@ namespace MoreMobile.Data.Context
         //Remove-Migration -Context DatabaseContext
 
         public DbSet<ServiceType> ServiceTypes { get; set; }
+        public DbSet<Warranty> Warranties { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -24,6 +25,8 @@ namespace MoreMobile.Data.Context
             modelBuilder.ApplyConfiguration(new UserConfiguration());
             modelBuilder.ApplyConfiguration(new VisitDateConfiguration());
             modelBuilder.ApplyConfiguration(new WarrantyConfiguration());
+            modelBuilder.ApplyConfiguration(new CompanyConfiguration());
+            modelBuilder.ApplyConfiguration(new AdminConfiguration());
             base.OnModelCreating(modelBuilder);
         }
     }

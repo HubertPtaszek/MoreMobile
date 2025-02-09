@@ -6,6 +6,8 @@ namespace MoreMobile.Application.Services
     {
         Task<List<ServiceTypeDTO>> GetAll();
 
+        Task<List<ServiceTypeDTO>> GetAll(Guid companyId);
+
         Task<ServiceTypeDTO?> Get(Guid id);
 
         Task<Guid?> Add(ServiceTypeDTO reques);

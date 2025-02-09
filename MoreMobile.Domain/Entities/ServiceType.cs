@@ -13,6 +13,9 @@ namespace MoreMobile.Domain.Entities
         [Range(0, 100)]
         public decimal VATRate { get; set; }
 
+        public Guid CompanyId { get; set; }
+        public virtual Company Company { get; set; } = null!;
+
         public virtual ICollection<Warranty> Warranties { get; set; } = [];
     }
 }

@@ -16,6 +16,9 @@ namespace MoreMobile.WebApi.Dependencies
             builder.Services.AddScoped<IWarrantyService, WarrantyService>();
             builder.Services.AddScoped<IWarrantyRepository, WarrantyRepository>();
             builder.Services.AddScoped<IVisitDateRepository, VisitDateRepository>();
+            builder.Services.AddScoped<IVisitDateService, VisitDateService>();
+            builder.Services.AddScoped<ICompanyRepository, CompanyRepository>();
+            builder.Services.AddScoped<ICompanyService, CompanyService>();
             builder.Services.AddTransient<SMSReminderService>();
         }
     }

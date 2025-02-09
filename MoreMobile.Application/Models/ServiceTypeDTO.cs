@@ -23,5 +23,7 @@ namespace MoreMobile.Application.Models
         [Required(ErrorMessageResourceName = "VATRateRequired", ErrorMessageResourceType = typeof(CoreResource))]
         [Range(0, 100)]
         public decimal VATRate { get; set; }
+
+        public Guid CompanyId { get; set; }
     }
 }

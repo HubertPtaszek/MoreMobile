@@ -70,6 +70,15 @@ namespace MoreMobile.Resources.Core {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Company name required.
+        /// </summary>
+        public static string CompanyNameRequired {
+            get {
+                return ResourceManager.GetString("CompanyNameRequired", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Email is required.
         /// </summary>
         public static string EmailRequired {
